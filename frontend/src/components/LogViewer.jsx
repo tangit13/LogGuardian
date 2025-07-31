@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import './LogViewer.css';
 
-const socket = io();
+// Use the full backend URL for the socket connection
+const socket = io('https://logguardian-backend.onrender.com'); // Update this to your backend URL
 
 const LogViewer = () => {
   const [logs, setLogs] = useState([]);
