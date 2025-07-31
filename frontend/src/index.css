@@ -1,0 +1,86 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-image: url('https://img.freepik.com/free-vector/matrix-style-binary-code-digital-falling-numbers-blue-background_1017-37387.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #ffffff;
+}
+
+.App {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: #00f0ff;
+  text-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff;
+}
+
+h2 {
+  color: #00f0ff;
+  text-shadow: 0 0 10px #00f0ff;
+  margin-bottom: 20px;
+}
+
+.log-container {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+  backdrop-filter: blur(6px);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+
+th, td {
+  padding: 16px 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #0a0a0a;
+  color: #00ffcc;
+  border-bottom: 2px solid #00f0ff;
+}
+
+tr {
+  transition: background-color 0.3s ease;
+}
+
+.log-row td {
+  text-shadow: 0 0 3px rgba(0, 255, 255, 0.4);
+}
+
+/* --- Anomaly Types --- */
+
+.log-row.INFO {
+  background-color: #003f5c;
+  color: #00f0ff;
+}
+
+.log-row.ERROR {
+  background-color: #7a0404;
+  color: #ff6666;
+}
+
+.log-row.WARN {
+  background-color: #f2a900;
+  color: #1a1a1a;
+}
+
+/* Optional Hover for Interactivity */
+tr:hover {
+  filter: brightness(1.1);
+  cursor: default;
+}

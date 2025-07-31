@@ -1,0 +1,5 @@
+Timestamp,AnomalyType,Message
+2025-07-31T10:12:45Z,ERROR,Null pointer exception at line 24
+2025-07-31T10:15:02Z,WARN,Deprecated API usage in LogParser.java
+2025-07-31T10:17:59Z,ERROR,FileNotFoundException for config.properties
+2025-07-31T10:20:11Z,INFO,Log rotation started
