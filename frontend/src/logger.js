@@ -1,6 +1,9 @@
-import io from 'socket.io-client';
+import { io } from 'socket.io-client';
 
-const socket = io();
+const socket = io("https://logguardian-backend.onrender.com", {
+  transports: ["websocket"],
+  withCredentials: true,
+});
 const channel = new BroadcastChannel('log_channel');
 
 // Unique session ID for this tab
