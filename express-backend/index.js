@@ -1,7 +1,6 @@
 // server.mjs
 import express from 'express';
 import http from 'http';
-import path from 'path';
 import fs from 'fs';
 import cors from 'cors';
 import { Server } from 'socket.io';
@@ -11,21 +10,27 @@ import { dirname, join } from 'path';
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: { origin: '*' }
+  cors: {
+    origin: 'https://logguardian-frontend.onrender.com', // ✅ Update to your actual frontend Render URL
+    methods: ['GET', 'POST'],
+    credentials: true
+  }
 });
-const PORT = process.env.PORT || 4000;
 
+const PORT = process.env.PORT || 4000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+// Middleware
 app.use(cors());
-app.use(express.static(join(__dirname, '../frontend/build')));
+app.use(express.json());
 
-// Static logs from CSV
+// CSV logs endpoint (optional)
 app.get('/logs', (req, res) => {
-  const csvPath = join(__dirname, '../backend/resources/anomalies.csv');
+  const csvPath = join(__dirname, './resources/anomalies.csv');
   fs.readFile(csvPath, 'utf8', (err, data) => {
     if (err) return res.status(500).json({ error: 'Failed to read anomalies.csv' });
+
     const lines = data.trim().split('\n');
     const headers = lines[0].split(',');
     const logs = lines.slice(1).map(line => {
@@ -36,26 +41,21 @@ app.get('/logs', (req, res) => {
   });
 });
 
-// ✅ Real-time Socket.IO
+// ✅ Real-time WebSocket handling
 io.on('connection', (socket) => {
-  console.log('Client connected');
+  console.log('✅ Client connected');
 
-  // Match the frontend emitter event name
   socket.on('new-log', (log) => {
-    console.log('Received log:', log);
-    io.emit('new-log', log); // Broadcast
+    console.log('📦 Received log:', log);
+    io.emit('new-log', log);
   });
 
   socket.on('disconnect', () => {
-    console.log('Client disconnected');
+    console.log('❌ Client disconnected');
   });
 });
 
-// React fallback
-app.get('*', (req, res) => {
-  res.sendFile(join(__dirname, '../frontend/build/index.html'));
-});
-
+// 🚀 Start server
 server.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
