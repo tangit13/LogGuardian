@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import './LogViewer.css';
 
-// Use the full backend URL for the socket connection
+// ✅ Connect to deployed backend (replace with your actual backend Render URL)
 const socket = io("https://logguardian-backend.onrender.com", {
-  transports: ["polling"],
+  transports: ["websocket"], // Use ['polling'] if websocket fails during testing
+  withCredentials: true
 });
 
-
+socket.on("connect_error", (err) => {
+  console.error("❌ Socket connection error:", err.message);
+});
 
 const LogViewer = () => {
   const [logs, setLogs] = useState([]);
@@ -28,6 +31,9 @@ const LogViewer = () => {
     });
 
     return () => {
+      socket.off('connect');
+      socket.off('disconnect');
+      socket.off('new-log');
       socket.disconnect();
     };
   }, []);
