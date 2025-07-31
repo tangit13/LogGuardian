@@ -3,9 +3,14 @@ import io from 'socket.io-client';
 import './LogViewer.css';
 
 // Use the full backend URL for the socket connection
-const socket = io("https://logguardian-backend.onrender.com", {
-  transports: ["websocket"],
+const io = new Server(server, {
+  cors: {
+    origin: 'https://logguardian-frontend.onrender.com', // Replace with your actual frontend URL
+    methods: ['GET', 'POST'],
+    credentials: true
+  }
 });
+
 
 const LogViewer = () => {
   const [logs, setLogs] = useState([]);
